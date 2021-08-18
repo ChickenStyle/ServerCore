@@ -1,0 +1,11 @@
+name: ServerCore
+main: me.chickenstyle.Main
+description: quel!
+api-version: 1.15
+version: 1.0
+author: ChickenStyle
+commands:
+  move:
+    description: command to move between worlds
+  load:
+    description: command to load worlds!

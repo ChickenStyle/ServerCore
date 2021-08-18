@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ServerCore:jar">
+    <output-path>D:/Test Servers/World Generation 1.15.2/plugins</output-path>
+    <root id="archive" name="ServerCore.jar">
+      <element id="module-output" name="ServerCore" />
+    </root>
+  </artifact>
+</component>
