@@ -69,13 +69,6 @@ public class MinersHandle {
 
                     } else {
 
-                    /*
-                    for (Player player: Bukkit.getOnlinePlayers()) {
-                        PlayerConnection connection = ((CraftPlayer)player).getHandle().playerConnection;
-                        connection.sendPacket(new PacketPlayOutCombatEvent(npcs.get(miner).getCombatTracker(), PacketPlayOutCombatEvent.EnumCombatEventType.ENTITY_DIED));
-                        connection.sendPacket(new PacketPlayOutEntityStatus(npcs.get(miner),(byte)3));
-                        connection.sendPacket(new PacketPlayOutAnimation(npcs.get(miner),(byte)0));
-                    }*/
                         npcs.get(miner).damageEntity(DamageSource.GENERIC,npcs.get(miner).getMaxHealth());
                         removeNPCPacket(npcs.get(miner));
                         npcs.remove(miner);
@@ -89,7 +82,7 @@ public class MinersHandle {
         miner.setSilent(true);
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         WorldServer world = miner.getWorld().getWorld().getHandle();
-        GameProfile profile = new GameProfile(UUID.randomUUID(), Utils.color("&7Miner " + (int) miner.getHealth() + "/" + (int) miner.getMaxHealth() + "❤"));
+        GameProfile profile = new GameProfile(UUID.randomUUID(), Utils.color("&7Miner"));
 
         PlayerInteractManager manager = new PlayerInteractManager(world);
 
@@ -102,7 +95,6 @@ public class MinersHandle {
         }
 
         EntityPlayer npc = new EntityPlayer(server,world,profile,manager);
-
 
         double x = miner.locX();
         double y = miner.locY();
@@ -119,8 +111,6 @@ public class MinersHandle {
 
 
         addNPCPacket(npc,miner);
-
-        //sendSetNPCSkinPacket(npc,"Friyo");
 
         npcs.put(miner,npc);
 
@@ -216,7 +206,7 @@ public class MinersHandle {
 
     private static void update(EntityPlayer npc,Miner miner) {
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player:npc.getWorld().getWorld().getPlayers()) {
             PlayerConnection connection = ((CraftPlayer)player).getHandle().playerConnection;
             connection.sendPacket(new PacketPlayOutEntityHeadRotation(npc,(byte)(miner.yaw *256/360)));
             connection.sendPacket(new PacketPlayOutEntity.PacketPlayOutEntityLook(npc.getId(),(byte)(miner.yaw*256/360),(byte)(miner.pitch*256/360),true));
@@ -225,7 +215,7 @@ public class MinersHandle {
     }
 
     private static void move(EntityPlayer npc,double x,double y,double z,float yaw,float pitch) {
-        for (Player player: Bukkit.getOnlinePlayers()) {
+        for (Player player:npc.getWorld().getWorld().getPlayers()) {
             PlayerConnection connection = ((CraftPlayer)player).getHandle().playerConnection;
             connection.sendPacket(new PacketPlayOutEntity.PacketPlayOutRelEntityMoveLook(npc.getId(),(short)(x*4096),(short)(y*4096),(short)(z*4096),(byte)(yaw*256/360),(byte)(pitch*256/360),true));
         }

@@ -91,7 +91,7 @@ public class PacketReader {
 
                                 player.sendMessage(miner.getHealth() + "");
 
-                                for (Player online:Bukkit.getOnlinePlayers()) {
+                                for (Player online:npc.getWorld().getWorld().getPlayers()) {
                                     PlayerConnection connection = ((CraftPlayer)online).getHandle().playerConnection;
                                     connection.sendPacket(new PacketPlayOutAnimation(npc,1));
                                 }
@@ -101,6 +101,7 @@ public class PacketReader {
 
 
                                 miner.getWorld().getWorld().playSound(loc, Sound.ENTITY_PLAYER_HURT,1,1);
+                                miner.updateName();
                             }
 
                             //Bukkit.getPluginManager().callEvent(new RightClickNPC(player, npc));

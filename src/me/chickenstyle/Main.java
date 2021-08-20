@@ -15,12 +15,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin{
 	private static Main instance;
+	private PacketReader packetReader;
 
 	@Override
 	public void onEnable() {
 		this.getConfig().options().copyDefaults();
 	    saveDefaultConfig();
 		instance = this;
+		packetReader = new PacketReader();
 
 		getCommand("move").setExecutor(new MoveCommand());
 		getCommand("load").setExecutor(new LoadCommand());
@@ -74,16 +76,14 @@ public class Main extends JavaPlugin{
 	public void validatePlayers() {
 		if(!Bukkit.getOnlinePlayers().isEmpty()) {
 			for(Player p : Bukkit.getOnlinePlayers()) {
-				PacketReader reader = new PacketReader();
-				reader.inject(p);
+				packetReader.inject(p);
 			}
 		}
 	}
 
 	public void invalidatePlayers() {
 		for(Player p : Bukkit.getOnlinePlayers()) {
-			PacketReader reader = new PacketReader();
-			reader.uninject(p);
+			packetReader.uninject(p);
 		}
 	}
 	

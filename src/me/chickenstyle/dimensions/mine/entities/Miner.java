@@ -43,8 +43,7 @@ public class Miner extends EntityZombie implements CustomMob {
 
     @Override
     public void updateName() {
-        this.setCustomNameVisible(true);
-        this.setCustomName(new ChatComponentText(Utils.color("&7Miner &c" + (int) getHealth() + "&f/&c" + (int) this.getMaxHealth() + " ❤")));
+
     }
 
     @Override
@@ -57,4 +56,8 @@ public class Miner extends EntityZombie implements CustomMob {
         return 0.5;
     }
 
+    @Override
+    protected boolean en() {
+        return false;
+    }
 }
